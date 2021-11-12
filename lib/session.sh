@@ -4,5 +4,4 @@ if [[ ${#1} -lt 32 ]]; then
 fi
 url="$1";
 response="$2";
-
 echo "$response" | grep '< Set-Cookie: session=' | cut -d'=' -f2 | cut -d';' -f1

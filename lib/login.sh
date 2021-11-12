@@ -19,6 +19,10 @@ redirectResponse=$(
   --cookie "session=$session;" \
   --data-raw "csrf=$csrf&username=$username&password=$password" 2>&1
 );
+if echo "$redirectResponse" | grep "class=is-warning" > /dev/null; then
+  echo "$redirectResponse" | grep "class=is-warning" | cut -d'>' -f2 | cut -d'<' -f1;
+  exit 1;
+fi;
 session=$($currentDir/session.sh "$url" "$redirectResponse");
 curl -s "$url/my-account" \
   --cookie "session=$session;" | grep 'Your username is'
